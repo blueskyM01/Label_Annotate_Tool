@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>1680</width>
-    <height>1100</height>
+    <height>1050</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>1680</width>
-    <height>1100</height>
+    <height>1050</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>1680</width>
-    <height>1100</height>
+    <height>1050</height>
    </size>
   </property>
   <property name="cursor">
@@ -110,7 +110,7 @@
    </widget>
    <widget class="QLabel" name="m4_CheckImage">
     <property name="enabled">
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
     <property name="geometry">
      <rect>
@@ -201,7 +201,7 @@
      <rect>
       <x>1270</x>
       <y>570</y>
-      <width>161</width>
+      <width>151</width>
       <height>51</height>
      </rect>
     </property>
@@ -235,6 +235,9 @@
     </property>
    </widget>
    <widget class="QPushButton" name="m4_CloseCheckImage">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>1490</x>
@@ -261,7 +264,7 @@
      <rect>
       <x>1270</x>
       <y>510</y>
-      <width>161</width>
+      <width>151</width>
       <height>51</height>
      </rect>
     </property>
@@ -279,7 +282,7 @@
     <property name="geometry">
      <rect>
       <x>1260</x>
-      <y>680</y>
+      <y>630</y>
       <width>181</width>
       <height>51</height>
      </rect>
@@ -298,7 +301,7 @@
     <property name="geometry">
      <rect>
       <x>1250</x>
-      <y>640</y>
+      <y>620</y>
       <width>421</width>
       <height>16</height>
      </rect>
@@ -311,7 +314,7 @@
     <property name="geometry">
      <rect>
       <x>1260</x>
-      <y>790</y>
+      <y>740</y>
       <width>221</width>
       <height>51</height>
      </rect>
@@ -333,7 +336,7 @@
     <property name="geometry">
      <rect>
       <x>1260</x>
-      <y>740</y>
+      <y>690</y>
       <width>411</width>
       <height>41</height>
      </rect>
@@ -358,7 +361,7 @@
     <property name="geometry">
      <rect>
       <x>1260</x>
-      <y>850</y>
+      <y>800</y>
       <width>411</width>
       <height>41</height>
      </rect>
@@ -374,6 +377,193 @@
     </property>
     <property name="text">
      <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>1260</x>
+      <y>850</y>
+      <width>181</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>楷体</family>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>设置标记点线段长度：</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="m4_LengthP">
+    <property name="geometry">
+     <rect>
+      <x>1440</x>
+      <y>850</y>
+      <width>51</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>楷体</family>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>20</string>
+    </property>
+    <property name="clearButtonEnabled">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="m4_SizeP">
+    <property name="geometry">
+     <rect>
+      <x>1440</x>
+      <y>890</y>
+      <width>51</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>楷体</family>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>8</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>1260</x>
+      <y>890</y>
+      <width>181</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>楷体</family>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>设置标记点线段粗细：</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>1260</x>
+      <y>930</y>
+      <width>181</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>楷体</family>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>设置标记点标号大小：</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="m4_Num_Size">
+    <property name="geometry">
+     <rect>
+      <x>1440</x>
+      <y>930</y>
+      <width>51</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>楷体</family>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>2.0</string>
+    </property>
+   </widget>
+   <widget class="Line" name="line_2">
+    <property name="geometry">
+     <rect>
+      <x>1250</x>
+      <y>840</y>
+      <width>421</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_6">
+    <property name="geometry">
+     <rect>
+      <x>1500</x>
+      <y>850</y>
+      <width>101</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>楷体</family>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>只能是整数</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_7">
+    <property name="geometry">
+     <rect>
+      <x>1500</x>
+      <y>890</y>
+      <width>101</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>楷体</family>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>只能是整数</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_8">
+    <property name="geometry">
+     <rect>
+      <x>1500</x>
+      <y>930</y>
+      <width>101</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>楷体</family>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>可以带小数</string>
     </property>
    </widget>
   </widget>
