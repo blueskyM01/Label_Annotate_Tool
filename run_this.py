@@ -53,39 +53,41 @@ class MyMainWinow(QMainWindow, Ui_MainWindow):
 
     # 完成标注， 同时选择是否打开下一张
     def m4_CloseAnn(self):
-        # 保存特征点和图像
-        if len(self.FeaturePointList) != 0 and len(self.OpenImagePath) != 0:
-            # 获取被标注图像的名称
-            m4_ImageName = self.OpenImagePath.split('/')
-            # 存入字典
-            dict_feature_point = defaultdict(list)
-            dict_feature_point[m4_ImageName[-1]] = self.FeaturePointList
-
-            with open(self.SavedefaultPath + m4_ImageName[-1] + '.json', "w") as f:
-                json.dump(dict_feature_point, f)
-
-            # dumps 将数据转换成字符串
-            # json_str = json.dumps(dict_feature_point)
-            # loads: 将字符串转换为字典
-            # new_dict = json.loads(json_str)
-            reply = QMessageBox.information(self, '提示', 'Label已保存到：' + self.SavedefaultPath + m4_ImageName[-1] + '.json'
-                                            , QMessageBox.Ok, QMessageBox.Ok)
-
-
-
-        self.m4_Back.setEnabled(False)
-        self.FeaturePointList = [] # 清空Feature Point点集列表
-        self.m4_ShowImage.setPixmap(QtGui.QPixmap(":/pic/YY.jpg"))
-
-        # 打开下一张？
-        reply = QMessageBox.information(self, '提示', '标注完成，是否打开下一张图片？', QMessageBox.Ok | QMessageBox.Close,
-                                        QMessageBox.Ok)
-        if reply == QMessageBox.Ok:
-            reply = QMessageBox.information(self, '提示', '标注完成，同时打开下一张图像！', QMessageBox.Ok, QMessageBox.Ok)
-            # 打开下一张图片
-            self.m4_OpenAnn()
+        if len(self.FeaturePointList) != 13:
+            reply = QMessageBox.information(self, '提示', '标注未达到13个点！', QMessageBox.Ok, QMessageBox.Ok)
         else:
-            reply = QMessageBox.information(self, '提示', '标注完成!', QMessageBox.Ok, QMessageBox.Ok)
+            # 保存特征点和图像
+            if len(self.FeaturePointList) != 0 and len(self.OpenImagePath) != 0:
+                # 获取被标注图像的名称
+                m4_ImageName = self.OpenImagePath.split('/')
+                # 存入字典
+                dict_feature_point = defaultdict(list)
+                dict_feature_point[m4_ImageName[-1]] = self.FeaturePointList
+                with open(self.SavedefaultPath + '/' + m4_ImageName[-1] + '.json', "w") as f:
+                    json.dump(dict_feature_point, f)
+
+                # dumps 将数据转换成字符串
+                # json_str = json.dumps(dict_feature_point)
+                # loads: 将字符串转换为字典
+                # new_dict = json.loads(json_str)
+                reply = QMessageBox.information(self, '提示', 'Label已保存到：' + self.SavedefaultPath + '/' + m4_ImageName[-1] + '.json'
+                                                , QMessageBox.Ok, QMessageBox.Ok)
+
+
+
+            self.m4_Back.setEnabled(False)
+            self.FeaturePointList = [] # 清空Feature Point点集列表
+            self.m4_ShowImage.setPixmap(QtGui.QPixmap(":/pic/YY.jpg"))
+
+            # 打开下一张？
+            reply = QMessageBox.information(self, '提示', '标注完成，是否打开下一张图片？', QMessageBox.Ok | QMessageBox.Close,
+                                            QMessageBox.Ok)
+            if reply == QMessageBox.Ok:
+                reply = QMessageBox.information(self, '提示', '标注完成，同时打开下一张图像！', QMessageBox.Ok, QMessageBox.Ok)
+                # 打开下一张图片
+                self.m4_OpenAnn()
+            else:
+                reply = QMessageBox.information(self, '提示', '标注完成!', QMessageBox.Ok, QMessageBox.Ok)
 
     # 标注图像显示
     def m4_AnnImageShow(self, frame):
@@ -97,7 +99,7 @@ class MyMainWinow(QMainWindow, Ui_MainWindow):
         pixmap = QPixmap.fromImage(QImg)
         self.m4_ShowImage.setPixmap(pixmap)
 
-        # 标注图像显示
+    # 检查标注图像显示
     def m4_AnnImageResultShow(self, frame):
         frame = frame.copy()
         height, width, bytesPerComponent = frame.shape
@@ -110,11 +112,14 @@ class MyMainWinow(QMainWindow, Ui_MainWindow):
 
     # 松开鼠标，获取特征点
     def m4_GetFeaturePoint(self, x0, y0):
-        x_center, y_center = self.m4_CoordinateConvert(x0, y0, self.m4_ShowAnnoWinWidth,
-                                                                   self.m4_ShowAnnoWinHeight,
-                                                                   self.image_width,
-                                                                   self.image_heigh)
-        self.FeaturePointList.append((x_center, y_center))
+        if len(self.FeaturePointList) <= 12:
+            x_center, y_center = self.m4_CoordinateConvert(x0, y0, self.m4_ShowAnnoWinWidth,
+                                                                       self.m4_ShowAnnoWinHeight,
+                                                                       self.image_width,
+                                                                       self.image_heigh)
+            self.FeaturePointList.append((x_center, y_center))
+        else:
+            reply = QMessageBox.information(self, '提示', '标注已达到13个点！', QMessageBox.Ok, QMessageBox.Ok)
         frame_show = self.img.copy()
         # 画出特征点
         self.m4_DrawFeaturePoint(self.FeaturePointList ,frame_show, lineLength=self.fpLength, size=self.fpSize, Num_Size=self.NumSize)
@@ -181,7 +186,7 @@ class MyMainWinow(QMainWindow, Ui_MainWindow):
     def m4_ShowAnnoResult(self):
         AnnImagePath, _ = QFileDialog.getOpenFileName(self, "请打开已标注的图片", self.OpendefaultPath)
         imagename = AnnImagePath.split('/')[-1]
-        labename = self.SavedefaultPath + imagename + '.json'
+        labename = self.SavedefaultPath + '/'+ imagename + '.json'
         if not os.path.exists(labename):
             reply = QMessageBox.information(self, '提示', '请选择已标注的图片, 同时请正确设置Label保存的目录!', QMessageBox.Ok, QMessageBox.Ok)
         else:
