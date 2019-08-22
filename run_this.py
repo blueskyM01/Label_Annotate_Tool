@@ -53,7 +53,7 @@ class MyMainWinow(QMainWindow, Ui_MainWindow):
 
     # 完成标注， 同时选择是否打开下一张
     def m4_CloseAnn(self):
-        if len(self.FeaturePointList) != 13:
+        if len(self.FeaturePointList) != 12:
             reply = QMessageBox.information(self, '提示', '标注未达到13个点！', QMessageBox.Ok, QMessageBox.Ok)
         else:
             # 保存特征点和图像
@@ -72,8 +72,6 @@ class MyMainWinow(QMainWindow, Ui_MainWindow):
                 # new_dict = json.loads(json_str)
                 reply = QMessageBox.information(self, '提示', 'Label已保存到：' + self.SavedefaultPath + '/' + m4_ImageName[-1] + '.json'
                                                 , QMessageBox.Ok, QMessageBox.Ok)
-
-
 
             self.m4_Back.setEnabled(False)
             self.FeaturePointList = [] # 清空Feature Point点集列表
@@ -112,14 +110,14 @@ class MyMainWinow(QMainWindow, Ui_MainWindow):
 
     # 松开鼠标，获取特征点
     def m4_GetFeaturePoint(self, x0, y0):
-        if len(self.FeaturePointList) <= 12:
+        if len(self.FeaturePointList) < 12:
             x_center, y_center = self.m4_CoordinateConvert(x0, y0, self.m4_ShowAnnoWinWidth,
                                                                        self.m4_ShowAnnoWinHeight,
                                                                        self.image_width,
                                                                        self.image_heigh)
             self.FeaturePointList.append((x_center, y_center))
         else:
-            reply = QMessageBox.information(self, '提示', '标注已达到13个点！', QMessageBox.Ok, QMessageBox.Ok)
+            reply = QMessageBox.information(self, '提示', '标注已达到12个点！', QMessageBox.Ok, QMessageBox.Ok)
         frame_show = self.img.copy()
         # 画出特征点
         self.m4_DrawFeaturePoint(self.FeaturePointList ,frame_show, lineLength=self.fpLength, size=self.fpSize, Num_Size=self.NumSize)
