@@ -14,6 +14,7 @@ class MyMainWinow(QMainWindow, Ui_MainWindow):
         super(MyMainWinow,self).__init__(parent)
         self.setupUi(self)
 
+        self.NewClassLabel = 21
         self.OpendefaultPath = './'
         self.SavedefaultPath = './'
         self.fpLength = int(self.m4_LengthP.text())
@@ -53,25 +54,22 @@ class MyMainWinow(QMainWindow, Ui_MainWindow):
 
     # 完成标注， 同时选择是否打开下一张
     def m4_CloseAnn(self):
-        if len(self.FeaturePointList) != 12:
-            reply = QMessageBox.information(self, '提示', '标注未达到13个点！', QMessageBox.Ok, QMessageBox.Ok)
-        else:
-            # 保存特征点和图像
-            if len(self.FeaturePointList) != 0 and len(self.OpenImagePath) != 0:
-                # 获取被标注图像的名称
-                m4_ImageName = self.OpenImagePath.split('/')
-                # 存入字典
-                dict_feature_point = defaultdict(list)
-                dict_feature_point[m4_ImageName[-1]] = self.FeaturePointList
-                with open(self.SavedefaultPath + '/' + m4_ImageName[-1] + '.json', "w") as f:
-                    json.dump(dict_feature_point, f)
+        # 保存特征点和图像
+        if len(self.FeaturePointList) != 0 and len(self.OpenImagePath) != 0:
+            # 获取被标注图像的名称
+            m4_ImageName = self.OpenImagePath.split('/')
+            # 存入字典
+            dict_feature_point = defaultdict(list)
+            dict_feature_point[m4_ImageName[-1]] = self.FeaturePointList
+            with open(self.SavedefaultPath + '/' + m4_ImageName[-1] + '.json', "w") as f:
+                json.dump(dict_feature_point, f)
 
-                # dumps 将数据转换成字符串
-                # json_str = json.dumps(dict_feature_point)
-                # loads: 将字符串转换为字典
-                # new_dict = json.loads(json_str)
-                reply = QMessageBox.information(self, '提示', 'Label已保存到：' + self.SavedefaultPath + '/' + m4_ImageName[-1] + '.json'
-                                                , QMessageBox.Ok, QMessageBox.Ok)
+            # dumps 将数据转换成字符串
+            # json_str = json.dumps(dict_feature_point)
+            # loads: 将字符串转换为字典
+            # new_dict = json.loads(json_str)
+            reply = QMessageBox.information(self, '提示', 'Label已保存到：' + self.SavedefaultPath + '/' + m4_ImageName[-1] + '.json'
+                                            , QMessageBox.Ok, QMessageBox.Ok)
 
             self.m4_Back.setEnabled(False)
             self.FeaturePointList = [] # 清空Feature Point点集列表
@@ -109,15 +107,14 @@ class MyMainWinow(QMainWindow, Ui_MainWindow):
 
 
     # 松开鼠标，获取特征点
-    def m4_GetFeaturePoint(self, x0, y0):
-        if len(self.FeaturePointList) < 12:
-            x_center, y_center = self.m4_CoordinateConvert(x0, y0, self.m4_ShowAnnoWinWidth,
-                                                                       self.m4_ShowAnnoWinHeight,
-                                                                       self.image_width,
-                                                                       self.image_heigh)
-            self.FeaturePointList.append((x_center, y_center))
-        else:
-            reply = QMessageBox.information(self, '提示', '标注已达到12个点！', QMessageBox.Ok, QMessageBox.Ok)
+    def m4_GetFeaturePoint(self, x0, y0, x1, y1):
+
+        m4_xtl, m4_ytl, m4_xbr, m4_ybr = self.m4_CoordinateConvert(x0, y0, x1, y1, self.m4_ShowAnnoWinWidth,
+                                                                   self.m4_ShowAnnoWinHeight,
+                                                                   self.image_width,
+                                                                   self.image_heigh)
+        self.FeaturePointList.append([m4_xtl, m4_ytl, m4_xbr, m4_ybr, self.NewClassLabel])
+
         frame_show = self.img.copy()
         # 画出特征点
         self.m4_DrawFeaturePoint(self.FeaturePointList ,frame_show, lineLength=self.fpLength, size=self.fpSize, Num_Size=self.NumSize)
@@ -127,10 +124,12 @@ class MyMainWinow(QMainWindow, Ui_MainWindow):
             self.m4_Back.setEnabled(True)
 
     # 窗口坐标转图像坐标
-    def m4_CoordinateConvert(self, x0, y0, win_width, win_heigh, image_width, image_heigh):
+    def m4_CoordinateConvert(self, x0, y0, x1, y1, win_width, win_heigh, image_width, image_heigh):
         '''
         :param x0: 矩形框的左上点x坐标(窗口上的）
         :param y0: 矩形框的左上点y坐标(窗口上的）
+        :param x1: 矩形框的右下点x坐标(窗口上的）
+        :param y1: 矩形框的右下点y坐标(窗口上的）
         :param win_width: 显示窗口的长度
         :param win_heigh: 显示窗口的宽度
         :param image_width: 图像的宽度
@@ -142,8 +141,9 @@ class MyMainWinow(QMainWindow, Ui_MainWindow):
 
         x_tl = x0 * m4_ratioX
         y_tl = y0 * m4_ratioY
-
-        m4_Coordinate = (int(x_tl), int(y_tl))
+        x_br = x1 * m4_ratioX
+        y_br = y1 * m4_ratioY
+        m4_Coordinate = (int(x_tl), int(y_tl), int(x_br), int(y_br))
         return m4_Coordinate
 
     # 去掉上一个特征点
@@ -161,18 +161,12 @@ class MyMainWinow(QMainWindow, Ui_MainWindow):
         count = 0
         for fPoint in FeaturePointList:
             count += 1
-            line1_x1 = fPoint[0] - lineLength
-            line1_y1 = fPoint[1] - lineLength
-            line1_x2 = fPoint[0] + lineLength
-            line1_y2 = fPoint[1] + lineLength
-
-            line2_x1 = fPoint[0] + lineLength
-            line2_y1 = fPoint[1] - lineLength
-            line2_x2 = fPoint[0] - lineLength
-            line2_y2 = fPoint[1] + lineLength
-            cv2.line(frame_show, (line1_x1, line1_y1), (line1_x2, line1_y2), (0, 255, 255), size)
-            cv2.line(frame_show, (line2_x1, line2_y1), (line2_x2, line2_y2), (0, 255, 255), size)
-            cv2.putText(frame_show, str(count), tuple(fPoint), cv2.FONT_HERSHEY_SIMPLEX, Num_Size, (255, 255, 0), size)
+            line1_x1 = int(fPoint[0])
+            line1_y1 = int(fPoint[1])
+            line1_x2 = int(fPoint[2])
+            line1_y2 = int(fPoint[3])
+            cv2.rectangle(frame_show, (line1_x1, line1_y1), (line1_x2, line1_y2), (0, 255, 255), size)
+            cv2.putText(frame_show, str(self.NewClassLabel), tuple([line1_x1,line1_y1]), cv2.FONT_HERSHEY_SIMPLEX, Num_Size, (255, 255, 0), size)
 
     def m4_SetOpenDir(self):
         self.OpendefaultPath = QFileDialog.getExistingDirectory(self, "请选择文件夹路径", "./")
