@@ -79,7 +79,7 @@ class MyMainWinow(QMainWindow, Ui_MainWindow):
             reply = QMessageBox.information(self, '提示', '标注完成，是否打开下一张图片？', QMessageBox.Ok | QMessageBox.Close,
                                             QMessageBox.Ok)
             if reply == QMessageBox.Ok:
-                reply = QMessageBox.information(self, '提示', '标注完成，同时打开下一张图像！', QMessageBox.Ok, QMessageBox.Ok)
+                # reply = QMessageBox.information(self, '提示', '标注完成，同时打开下一张图像！', QMessageBox.Ok, QMessageBox.Ok)
                 # 打开下一张图片
                 self.m4_OpenAnn()
             else:
