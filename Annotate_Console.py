@@ -65,7 +65,7 @@ class Ui_MainWindow(object):
         self.label_5.setFont(font)
         self.label_5.setObjectName("label_5")
         self.m4_CheckAnnotate = QtWidgets.QLabel(self.centralwidget)
-        self.m4_CheckAnnotate.setGeometry(QtCore.QRect(910, 10, 461, 41))
+        self.m4_CheckAnnotate.setGeometry(QtCore.QRect(910, 10, 541, 41))
         font = QtGui.QFont()
         font.setFamily("黑体")
         font.setPointSize(10)
@@ -230,7 +230,7 @@ class Ui_MainWindow(object):
         self.m4_Classes.addItem("")
         self.m4_Classes.addItem("")
         self.label_9 = QtWidgets.QLabel(self.centralwidget)
-        self.label_9.setGeometry(QtCore.QRect(1400, 10, 91, 41))
+        self.label_9.setGeometry(QtCore.QRect(1450, 10, 41, 41))
         font = QtGui.QFont()
         font.setFamily("楷体")
         font.setPointSize(14)
@@ -273,6 +273,6 @@ class Ui_MainWindow(object):
         self.m4_Classes.setItemText(1, _translate("MainWindow", "四旋翼-无人机"))
         self.m4_Classes.setItemText(2, _translate("MainWindow", "固定翼"))
         self.m4_Classes.setItemText(3, _translate("MainWindow", "降落伞"))
-        self.label_9.setText(_translate("MainWindow", "标类别："))
+        self.label_9.setText(_translate("MainWindow", "类："))
 
 import apprcc_rc

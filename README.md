@@ -12,3 +12,5 @@
     ```
     self.m4_ShowImage = m4_QLabel(self.centralwidget)
     ````
+## 2.软件的使用说明
+* 1. 下载标注软件：

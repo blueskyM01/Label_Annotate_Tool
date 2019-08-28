@@ -192,6 +192,7 @@ class MyMainWinow(QMainWindow, Ui_MainWindow):
             img = cv2.imread(AnnImagePath)
             self.m4_DrawFeaturePoint(fps, img, lineLength=self.fpLength, size=self.fpSize, Num_Size=self.NumSize)
             self.m4_AnnImageResultShow(img)
+            self.m4_CheckAnnotate.setText(labename)
 
     def m4_CloseShowAnnoResult(self):
         self.m4_CheckImage.setPixmap(QtGui.QPixmap(":/pic/YY.jpg"))
