@@ -14,7 +14,8 @@ class MyMainWinow(QMainWindow, Ui_MainWindow):
         super(MyMainWinow,self).__init__(parent)
         self.setupUi(self)
 
-        self.NewClassLabel = 21
+        self.NewClassLabel = 0
+        self.ClassList = ['Face', 'UAV', 'Plan', 'parachute']
         self.OpendefaultPath = './'
         self.SavedefaultPath = './'
         self.fpLength = int(self.m4_LengthP.text())
@@ -34,6 +35,7 @@ class MyMainWinow(QMainWindow, Ui_MainWindow):
         self.m4_SizeP.textChanged.connect(self.fpSize_changed)
         self.m4_Num_Size.textChanged.connect(self.NumSize_changed)
         self.m4_CloseCheckImage.clicked.connect(self.m4_CloseShowAnnoResult)
+        self.m4_Classes.currentIndexChanged.connect(self.m4_ChooseClass)
     # 打开标注图片
     def m4_OpenAnn(self):
         # Feature Point点集列表
@@ -84,6 +86,7 @@ class MyMainWinow(QMainWindow, Ui_MainWindow):
                 self.m4_OpenAnn()
             else:
                 reply = QMessageBox.information(self, '提示', '标注完成!', QMessageBox.Ok, QMessageBox.Ok)
+                self.m4_ShowImage.setEnabled(False)  # 使能标注窗口
 
     # 标注图像显示
     def m4_AnnImageShow(self, frame):
@@ -166,7 +169,7 @@ class MyMainWinow(QMainWindow, Ui_MainWindow):
             line1_x2 = int(fPoint[2])
             line1_y2 = int(fPoint[3])
             cv2.rectangle(frame_show, (line1_x1, line1_y1), (line1_x2, line1_y2), (0, 255, 255), size)
-            cv2.putText(frame_show, str(self.NewClassLabel), tuple([line1_x1,line1_y1]), cv2.FONT_HERSHEY_SIMPLEX, Num_Size, (255, 255, 0), size)
+            cv2.putText(frame_show, self.ClassList[self.NewClassLabel], tuple([line1_x1,line1_y1]), cv2.FONT_HERSHEY_SIMPLEX, Num_Size, (255, 255, 0), size)
 
     def m4_SetOpenDir(self):
         self.OpendefaultPath = QFileDialog.getExistingDirectory(self, "请选择文件夹路径", "./")
@@ -202,6 +205,10 @@ class MyMainWinow(QMainWindow, Ui_MainWindow):
 
     def NumSize_changed(self):
         self.NumSize = float(self.m4_Num_Size.text())
+
+    def m4_ChooseClass(self):
+        self.NewClassLabel = self.m4_Classes.currentIndex()
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     myWin = MyMainWinow()

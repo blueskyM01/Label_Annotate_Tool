@@ -48,6 +48,9 @@
     <property name="cursor">
      <cursorShape>CrossCursor</cursorShape>
     </property>
+    <property name="mouseTracking">
+     <bool>true</bool>
+    </property>
     <property name="autoFillBackground">
      <bool>false</bool>
     </property>
@@ -160,7 +163,7 @@
      <rect>
       <x>910</x>
       <y>10</y>
-      <width>541</width>
+      <width>461</width>
       <height>41</height>
      </rect>
     </property>
@@ -436,7 +439,7 @@
      </font>
     </property>
     <property name="text">
-     <string>8</string>
+     <string>2</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_3">
@@ -493,7 +496,7 @@
      </font>
     </property>
     <property name="text">
-     <string>2.0</string>
+     <string>0.4</string>
     </property>
    </widget>
    <widget class="Line" name="line_2">
@@ -564,6 +567,61 @@
     </property>
     <property name="text">
      <string>可以带小数</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="m4_Classes">
+    <property name="geometry">
+     <rect>
+      <x>1490</x>
+      <y>10</y>
+      <width>181</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>楷体</family>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <item>
+     <property name="text">
+      <string>人脸</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>四旋翼-无人机</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>固定翼</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>降落伞</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QLabel" name="label_9">
+    <property name="geometry">
+     <rect>
+      <x>1400</x>
+      <y>10</y>
+      <width>91</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>楷体</family>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>标类别：</string>
     </property>
    </widget>
   </widget>
