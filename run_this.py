@@ -112,8 +112,8 @@ class MyMainWinow(QMainWindow, Ui_MainWindow):
     # 松开鼠标，获取特征点
     def m4_GetFeaturePoint(self, x0, y0, x1, y1):
 
-        m4_xtl, m4_ytl, m4_xbr, m4_ybr = self.m4_CoordinateConvert(x0, y0, x1, y1, self.m4_ShowAnnoWinWidth,
-                                                                   self.m4_ShowAnnoWinHeight,
+        m4_xtl, m4_ytl, m4_xbr, m4_ybr = self.m4_CoordinateConvert(x0, y0, x1, y1, self.m4_ShowImage.width(),
+                                                                   self.m4_ShowImage.height(),
                                                                    self.image_width,
                                                                    self.image_heigh)
         self.FeaturePointList.append([m4_xtl, m4_ytl, m4_xbr, m4_ybr, self.NewClassLabel])
